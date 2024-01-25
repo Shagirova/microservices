@@ -1,12 +1,14 @@
 resource "aws_security_group" "backend_sg" {
   name        = "${var.name}-security-group"
   description = "Backend Security Group for SSH, DNS, HTTP, and HTTPS"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For SSH connections to the server"
   }
 
@@ -15,6 +17,7 @@ resource "aws_security_group" "backend_sg" {
     to_port     = 53
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For DNS requests from the server"
   }
 
@@ -23,6 +26,7 @@ resource "aws_security_group" "backend_sg" {
     to_port     = 53
     protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For DNS requests from the server"
   }
 
@@ -31,6 +35,7 @@ resource "aws_security_group" "backend_sg" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For HTTP requests from the server"
   }
 
@@ -39,6 +44,7 @@ resource "aws_security_group" "backend_sg" {
     to_port     = 80
     protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For HTTP requests from the server"
   }
 
@@ -47,6 +53,7 @@ resource "aws_security_group" "backend_sg" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For HTTPS requests from the server"
   }
 
@@ -55,6 +62,7 @@ resource "aws_security_group" "backend_sg" {
     to_port     = 443
     protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For HTTPS requests from the server"
   }
 
@@ -100,7 +108,6 @@ resource "aws_security_group" "backend_sg" {
 }
 
 resource "aws_instance" "backend" {
-  key_name = var.name
   ami           = var.image  
   instance_type = var.instance_type
   subnet_id     = var.subnet_id  

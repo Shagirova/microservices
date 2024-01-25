@@ -40,6 +40,9 @@ variable "database_size" {
 
 variable "device_name" {
   type = string
-  default = "/dev/sdf"
-  
+  default = "/dev/sdf"  
+}
+
+variable "vpc_id" {
+  type = string
 }

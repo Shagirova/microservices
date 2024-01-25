@@ -1,12 +1,14 @@
 resource "aws_security_group" "frontend_sg" {
   name        = "${var.name}-security-group"
   description = "Frontend Security Group for SSH, DNS, HTTP, and HTTPS"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For SSH connections to the server"
   }
 
@@ -15,6 +17,7 @@ resource "aws_security_group" "frontend_sg" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For HTTP requests to the server"
   }
 
@@ -23,6 +26,7 @@ resource "aws_security_group" "frontend_sg" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For HTTPS requests to the server"
   }
 
@@ -31,6 +35,7 @@ resource "aws_security_group" "frontend_sg" {
     to_port     = 53
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For DNS requests from the server (TCP)"
   }
 
@@ -39,6 +44,7 @@ resource "aws_security_group" "frontend_sg" {
     to_port     = 53
     protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "For DNS requests from the server (UDP)"
   }
 
@@ -47,6 +53,7 @@ resource "aws_security_group" "frontend_sg" {
     to_port     = 53
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "DNS requests from the server"
   }
 
@@ -55,6 +62,7 @@ resource "aws_security_group" "frontend_sg" {
     to_port     = 53
     protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "DNS requests from the server"
   }
 
@@ -63,6 +71,7 @@ resource "aws_security_group" "frontend_sg" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "HTTP requests from the server"
   }
 
@@ -71,6 +80,7 @@ resource "aws_security_group" "frontend_sg" {
     to_port     = 80
     protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "HTTP requests from the server"
   }
 
@@ -79,6 +89,7 @@ resource "aws_security_group" "frontend_sg" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "HTTPS requests from the server"
   }
 
@@ -87,12 +98,12 @@ resource "aws_security_group" "frontend_sg" {
     to_port     = 443
     protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
     description = "HTTPS requests from the server"
   }
 }
 
 resource "aws_instance" "frontend" {
-  key_name = var.name
   ami           = var.image  
   instance_type = var.instance_type
   subnet_id     = var.subnet_id  

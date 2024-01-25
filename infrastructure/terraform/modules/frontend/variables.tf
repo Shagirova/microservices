@@ -29,3 +29,7 @@ variable "instance_type" {
 variable "image" {
   type = string  
 }
+
+variable "vpc_id" {
+  type = string
+}
